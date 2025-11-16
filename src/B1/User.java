@@ -12,6 +12,13 @@ public class User {
         this.phonenumber = phoneNumber;
     }
 
+    public String getName() { return name; }
+
+    public String getSurname() { return surname; }
+
+    public String getPhonenumber() { return phonenumber; }
+
+
     @Override
     public String toString() {
         return "Имя: " + name + " | " + "Фамилия: " + surname + " | " + "Номер телефона: " + phonenumber;

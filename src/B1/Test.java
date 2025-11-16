@@ -14,7 +14,9 @@ public class Test {
         System.out.println("2. Добавить книгу в коллецию");
         System.out.println("3. Отобразить клиентов");
         System.out.println("4. Добавить клиента");
-        System.out.println("5. Выйти");
+        System.out.println("5. Взять книгу из коллекции");
+//        System.out.println("6. Вернуть книгу в коллекцию");
+        System.out.println("7. Выйти");
 
         Book book1 = new Book("Мастер и Маргарита", new Author("Михаил Булгаков"), generateId());
         Book book2 = new Book("Идиот", new Author("Фёдер Достоевский"), generateId());
@@ -33,6 +35,7 @@ public class Test {
             switch (num) {
                 case "1" -> {
                     printBookList(list);
+
                 }
                 case "2" -> {
                     addBook(console);
@@ -46,6 +49,12 @@ public class Test {
                     printUserList(users);
                 }
                 case "5" -> {
+                    reserveBook(console);
+                }
+//                case "6" -> {
+//                    returnBook(console);
+//                }
+                case "7" -> {
                     System.exit(0);
                 }
                 default -> {
@@ -97,4 +106,53 @@ public class Test {
         System.out.println("Текущий список клиентов: ");
         users.forEach(System.out::println);
     }
+
+    private static void reserveBook(Scanner console) {
+        printBookList(list);
+        System.out.println("Выберите книгу (введите серийный номер):");
+        String bookId = console.nextLine();
+
+        Book selectedBook = null;
+        for (Book book : list) {
+            if (book.getId().equals(bookId)) {
+                selectedBook = book;
+                break;
+            }
+        }
+
+        if (selectedBook == null) {
+            System.out.println("Книга с таким серийным номером не найдена!");
+            return;
+        }
+
+        if (selectedBook.isReserved()) {
+            System.out.println("Эта книга уже забронирована!");
+            return;
+        }
+
+        printUserList(users);
+        System.out.println("Кто берет книгу? (введите номер телефона клиента):");
+        String userPhone = console.nextLine();
+
+        User selectedUser = null;
+        for (User user : users) {
+            if (user.getPhonenumber().equals(userPhone)) {
+                selectedUser = user;
+                break;
+            }
+        }
+
+        if (selectedUser == null) {
+            System.out.println("Клиент с таким номером телефона не найден!");
+            return;
+        }
+
+        selectedBook.setReserved(true);
+        selectedBook.setReservedBy(userPhone);
+
+        System.out.println("Книга '" + selectedBook.getName() + "' успешно забронирована для " +
+                selectedUser.getName() + " " + selectedUser.getSurname());
+    }
+
+
 }
