@@ -5,15 +5,15 @@ public class Book {
     private String name;
     private Author author;
     private String id;
-    private boolean isReserved;
-    private String reservedBy;
+    private int totalCopies;
+    private int availableCopies;
 
-    public Book(String name, Author author, String id) {
+    public Book(String name, Author author, String id, int totalCopies) {
         this.name = name;
         this.author = author;
         this.id = id;
-        this.isReserved = false;
-        this.reservedBy = null;
+        this.totalCopies = totalCopies;
+        this.availableCopies = totalCopies;
     }
 
     public String getName() {
@@ -24,8 +24,8 @@ public class Book {
         this.name = name;
     }
 
-    public String getAuthor() {
-        return author.toString();
+    public Author getAuthor() {
+        return author;
     }
 
     public void setAuthor(Author author) {
@@ -36,19 +36,34 @@ public class Book {
         return id;
     }
 
-    public boolean isReserved() { return isReserved; }
+    public int getTotalCopies() {
+        return totalCopies;
+    }
 
-    public void setReserved(boolean reserved) { isReserved = reserved; }
+    public int getAvailableCopies() {
+        return availableCopies;
+    }
 
-    public String getReservedBy() { return reservedBy; }
+    public boolean isAvailable() {
+        return availableCopies > 0;
+    }
 
-    public void setReservedBy(String reservedBy) { this.reservedBy = reservedBy; }
+    public void borrowCopy() {
+        if (availableCopies > 0) {
+            availableCopies--;
+        }
+    }
+
+    public void returnCopy() {
+        if (availableCopies < totalCopies) {
+            availableCopies++;
+        }
+    }
 
 
     @Override
     public String toString() {
-        String status = isReserved ? " (Зарезервирована)" : " (Доступна)";
-        return "Название книги: " + name + " | " + "Автор: " + author + " | " + "Серийный номер: " + id + status;
+        return "Название книги: " + name + " | " + "Автор: " + author + " | " + "Серийный номер: " + id + " | " + "Доступно: " + availableCopies + "/" + totalCopies;
     }
 
 }
