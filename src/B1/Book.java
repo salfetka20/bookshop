@@ -44,20 +44,8 @@ public class Book {
         return availableCopies;
     }
 
-    public boolean isAvailable() {
-        return availableCopies > 0;
-    }
-
-    public void borrowCopy() {
-        if (availableCopies > 0) {
-            availableCopies--;
-        }
-    }
-
-    public void returnCopy() {
-        if (availableCopies < totalCopies) {
-            availableCopies++;
-        }
+    public void setAvailableCopies(int availableCopies) {
+        this.availableCopies = availableCopies;
     }
 
 
