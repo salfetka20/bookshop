@@ -9,4 +9,6 @@ public class Test {
         ConsoleView view = new ConsoleView(service);
         view.start();
     }
+
+    // фывфыв
 }
